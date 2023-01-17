@@ -38,6 +38,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   provider: ^6.0.5
   english_words: ^4.0.0
+  flutter_sound: ^9.2.13
+  permission_handler: ^10.2.0
 
 dev_dependencies:
   flutter_test:

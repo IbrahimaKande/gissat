@@ -1,9 +1,10 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:guissat/screens/pages/history.dart';
 import 'package:provider/provider.dart';
-import 'screens/pages/favorite.dart';
+import 'screens/pages/tvShows.dart';
 import 'screens/pages/generator.dart';
-import 'screens/pages/search.dart';
+import 'screens/pages/musicSerach.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => MyAppState(),
       child: MaterialApp(
-        title: 'Namer App',
+        title: 'Guissat',
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
@@ -31,19 +32,6 @@ class MyApp extends StatelessWidget {
 
 class MyAppState extends ChangeNotifier {
   var current = WordPair.random();
-
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 40, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Search',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: History',
-      style: optionStyle,
-    )
-  ];
 
   void getNext() {
     current = WordPair.random();
@@ -77,13 +65,13 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page = SearchPage();
+        page = MusicSearchPage();
         break;
       case 1:
-        page = FavoritesPage();
+        page = TvShowSearchPage();
         break;
       case 2:
-        page = GeneratorPage();
+        page = HistoryPage();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -104,16 +92,16 @@ class _MyHomePageState extends State<MyHomePage> {
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Search',
+              icon: Icon(Icons.music_note),
+              label: 'Music',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.live_tv),
+              label: 'TV Show',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.hourglass_bottom),
               label: 'History',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.create),
-              label: 'Generator',
             )
           ],
           currentIndex: selectedIndex,

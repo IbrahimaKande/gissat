@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:guissat/main.dart';
 import 'package:provider/provider.dart';
 
-class FavoritesPage extends StatelessWidget {
+class TvShowSearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
