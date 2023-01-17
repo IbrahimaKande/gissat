@@ -2,8 +2,8 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:guissat/screens/pages/history.dart';
 import 'package:provider/provider.dart';
-import 'screens/pages/tvShows.dart';
-import 'screens/pages/generator.dart';
+import 'screens/pages/tvShowsSearch.dart';
+import 'screens/pages/generator_sample.dart';
 import 'screens/pages/musicSerach.dart';
 
 void main() {
