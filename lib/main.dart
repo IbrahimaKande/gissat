@@ -5,8 +5,11 @@ import 'package:provider/provider.dart';
 import 'screens/pages/tvShowsSearch.dart';
 import 'screens/pages/generator_sample.dart';
 import 'screens/pages/musicSerach.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
@@ -63,6 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     Widget page;
+    print("start");
     switch (selectedIndex) {
       case 0:
         page = MusicSearchPage();

@@ -40,6 +40,10 @@ dependencies:
   english_words: ^4.0.0
   flutter_sound: ^9.2.13
   permission_handler: ^10.2.0
+  http: ^0.13.5
+  flutter_dotenv: ^5.0.2
+  shared_preferences: ^2.0.16
+  flutter_secure_storage: ^7.0.1
 
 dev_dependencies:
   flutter_test:
@@ -57,6 +61,9 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  assets:
+    - .env
+    - platforms.json
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
