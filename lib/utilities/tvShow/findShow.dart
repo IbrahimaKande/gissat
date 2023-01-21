@@ -20,12 +20,13 @@ Future<TvShow> fetchTvShows(title, country) async {
 
   var result = await response.stream.bytesToString();
 
-  if (response.statusCode == 200) {
+  if ((jsonDecode(result)["results"].length == 0) |
+      (response.statusCode != 200)) {
+    return TvShow("null", "null", "null");
+  } else {
     var show =
         TvShow(title, jsonDecode(result)["results"][0]["picture"], result);
 
     return show;
-  } else {
-    throw (response.reasonPhrase!);
   }
 }

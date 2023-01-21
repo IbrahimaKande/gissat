@@ -1,40 +1,36 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:guissat/main.dart';
-import 'package:provider/provider.dart';
 import '../../classes/tvShow.dart';
-import '../../utilities/findShow.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../../utilities/tvShow/findShow.dart';
+import '../pages/platformsView.dart';
 
-final List<String> countries = <String>[
-  'fr',
-  'uk',
-  'us',
-  'ar',
-  'at',
-  'be',
-  'br',
-  'ca',
-  'de',
-  'es',
-  'ie',
-  'id',
-  'it',
-  'is',
-  'kr',
-  'my',
-  'mx',
-  'no',
-  'nl',
-  'pt',
-  'se',
-  'sg'
-];
+const countries = {
+  "🇫🇷": "fr",
+  "🇬🇧": "uk",
+  "🇺🇸": "us",
+  "🇦🇲": "ar",
+  "🇧🇪": "be",
+  "🇨🇦": "na",
+  "🇩🇰": "de",
+  "🇪🇸": "es",
+  "🇮🇹": "it",
+  "🇮🇱": "is",
+  "🇳🇴": "no",
+  "🇳🇱": "nl",
+  "🇵🇹": "pt",
+};
 
-class TvShowSearchPage extends StatelessWidget {
+class TvShowSearchPage extends StatefulWidget {
+  TvShowSearchPage({super.key});
+
+  @override
+  State<TvShowSearchPage> createState() => _TvShowSearchPageState();
+}
+
+class _TvShowSearchPageState extends State<TvShowSearchPage> {
   final textController = TextEditingController();
-  String dropdownValue = countries.first;
+
+  String dropdownValue = countries['🇫🇷']!;
+
   late Future<TvShow> t;
 
   @override
@@ -60,17 +56,24 @@ class TvShowSearchPage extends StatelessWidget {
           style: const TextStyle(color: Color.fromARGB(255, 40, 0, 200)),
           underline: Container(
             height: 2,
-            color: Color.fromARGB(255, 40, 0, 200),
+            color: const Color.fromARGB(255, 40, 0, 200),
           ),
           onChanged: (String? value) {
-            dropdownValue = value!;
+            setState(() {
+              dropdownValue = value!;
+            });
           },
-          items: countries.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
+          items: countries
+              .map((String key, String value) {
+                return MapEntry(
+                    key,
+                    DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(key),
+                    ));
+              })
+              .values
+              .toList(),
         ),
         const SizedBox(height: 15),
         ElevatedButton.icon(
@@ -82,113 +85,37 @@ class TvShowSearchPage extends StatelessWidget {
                     return FutureBuilder<TvShow>(
                         future: t,
                         builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            String tit = snapshot.data!.title;
-                          } else if (snapshot.hasError) {
-                            return Text('${snapshot.error}');
+                          if ((snapshot.hasData) &
+                              (snapshot.data!.title != "null")) {
+                            return AlertDialog(
+                                content: SizedBox(
+                              width: MediaQuery.of(context).size.width * .9,
+                              child: PlatformsView(
+                                tvShow: snapshot.data!,
+                              ),
+                            ));
+                          } else if ((snapshot.hasError) &
+                              (snapshot.data!.title != "null")) {
+                            return AlertDialog(
+                              content:
+                                  Text("An error occurred : ${snapshot.error}"),
+                            );
+                          } else if (snapshot.data!.title == "null") {
+                            return AlertDialog(
+                              content: Text(
+                                  "We couldn't find any result for '${textController.text}' in that country😢"),
+                            );
                           }
-
-                          return AlertDialog(
-                              title: Text(snapshot.data!.title),
-                              actions: <Widget>[
-                                Image.network(snapshot.data!.imageUrl),
-                                /*CustomScrollView(
-                                  slivers: <Widget>[
-                                    SliverGrid(
-                                      gridDelegate:
-                                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                                        maxCrossAxisExtent: 200.0,
-                                        mainAxisSpacing: 10.0,
-                                        crossAxisSpacing: 10.0,
-                                        childAspectRatio: 4.0,
-                                      ),
-                                      delegate: SliverChildBuilderDelegate(
-                                        (BuildContext context, int index) {
-                                          return Container(
-                                            alignment: Alignment.center,
-                                            color:
-                                                Colors.teal[100 * (index % 9)],
-                                            child: Text('Grid Item $index'),
-                                          );
-                                        },
-                                        childCount: 20,
-                                      ),
-                                    ),
-                                    SliverFixedExtentList(
-                                      itemExtent: 50.0,
-                                      delegate: SliverChildBuilderDelegate(
-                                        (BuildContext context, int index) {
-                                          return Container(
-                                            alignment: Alignment.center,
-                                            color: Colors
-                                                .lightBlue[100 * (index % 9)],
-                                            child: Text('List Item $index'),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                ListView.builder(
-                                    padding: const EdgeInsets.all(8),
-                                    itemCount:
-                                        jsonDecode(snapshot.data!.platforms)[
-                                                "results"][0]["locations"]
-                                            .length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Container(
-                                          height: 50,
-                                          child: Center(
-                                            child: Text(jsonDecode(snapshot
-                                                        .data!.platforms)[
-                                                    "results"][0]["locations"]
-                                                [index]["display_name"]),
-                                          ));
-                                    }),*/
-                                TextButton(
-                                  onPressed: () {
-                                    print("okay clicked");
-                                  },
-                                  child: Container(
-                                    color: Colors.green,
-                                    padding: const EdgeInsets.all(14),
-                                    child: const Text("okay"),
-                                  ),
-                                ),
-                              ]);
+                          return const Icon(Icons.music_note);
                         });
                   });
-              //print(result.imageUrl);
               return result;
             });
-            /*showDialog(
-              context: context,
-              builder: (context) {
-                return FutureBuilder<TvShow>(
-                    future: t,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        String tit = snapshot.data!.title;
-                        Future<String> imageUrl = snapshot.data!.imageUrl;
-                      } else if (snapshot.hasError) {
-                        return Text('${snapshot.error}');
-                      }
-
-                      return AlertDialog(
-                        content: Text(snapshot.data!.imageUrl),
-                      );
-                    });
-              },
-            );*/
           },
-          icon: Icon(Icons.search),
+          icon: const Icon(Icons.search),
           label: const Text('Search'),
         ),
       ],
     );
   }
 }
-
-// store done, now display the call result first then the historic
-//silvergrid added now make it work
