@@ -1,6 +1,4 @@
-import 'dart:math';
-import 'package:shared_preferences/shared_preferences.dart';
-
+// ignore: file_names
 class TvShow {
   late String title;
   late String imageUrl;
@@ -11,19 +9,4 @@ class TvShow {
     this.imageUrl = imageUrl;
     this.platforms = platforms;
   }
-
-  getTitle(TvShow t) {
-    return t.title;
-  }
-
-  save(TvShow t, String platforms) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(t.title, platforms);
-  }
-
-  var _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  Random _rnd = Random();
-
-  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
-      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 }

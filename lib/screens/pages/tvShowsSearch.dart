@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:guissat/utilities/tvShow/saveShow.dart';
 import 'package:guissat/utilities/tvShow/viewTvShow.dart';
 import '../../classes/tvShow.dart';
-import '../../utilities/tvShow/findShow.dart';
-import '../pages/platformsView.dart';
 
 const countries = {
   "🇫🇷": "fr",
@@ -22,7 +20,7 @@ const countries = {
 };
 
 class TvShowSearchPage extends StatefulWidget {
-  TvShowSearchPage({super.key});
+  const TvShowSearchPage({super.key});
 
   @override
   State<TvShowSearchPage> createState() => _TvShowSearchPageState();

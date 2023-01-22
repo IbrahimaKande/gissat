@@ -1,14 +1,7 @@
-import 'dart:js';
-
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
-import 'package:guissat/main.dart';
-import 'package:guissat/screens/pages/platformsView.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart'
+    show FlutterSecureStorage;
 
-import '../../classes/tvShow.dart';
-import '../../utilities/tvShow/findShow.dart';
 import '../../utilities/tvShow/viewTvShow.dart';
 
 class HistoryPage extends StatelessWidget {
@@ -16,7 +9,6 @@ class HistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
     const countries = {
       "🇫🇷": "fr",
       "🇬🇧": "uk",

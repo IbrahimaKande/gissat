@@ -1,9 +1,6 @@
 // ignore_for_file: file_names
 
-import 'dart:html';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:guissat/classes/tvShow.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../utilities/tvShow/getPlatformsList.dart';

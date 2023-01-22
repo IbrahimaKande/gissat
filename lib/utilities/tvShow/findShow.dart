@@ -1,8 +1,8 @@
+// ignore: file_names
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../classes/tvShow.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter/services.dart' show rootBundle;
 
 Future<TvShow> fetchTvShows(title, country) async {
   var headers = {

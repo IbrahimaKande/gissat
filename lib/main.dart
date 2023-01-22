@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:guissat/screens/pages/history.dart';
 import 'package:provider/provider.dart';
 import 'screens/pages/tvShowsSearch.dart';
-import 'screens/pages/generator_sample.dart';
 import 'screens/pages/musicSerach.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter/services.dart' show rootBundle;
 
 void main() async {
   await dotenv.load(fileName: ".env");
@@ -66,16 +64,15 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     Widget page;
-    print("start");
     switch (selectedIndex) {
       case 0:
         page = MusicSearchPage();
         break;
       case 1:
-        page = TvShowSearchPage();
+        page = const TvShowSearchPage();
         break;
       case 2:
-        page = HistoryPage();
+        page = const HistoryPage();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -117,27 +114,5 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       );
     });
-  }
-}
-
-class BigCard extends StatelessWidget {
-  const BigCard({
-    Key? key,
-    required this.pair,
-  }) : super(key: key);
-
-  final WordPair pair;
-
-  @override
-  Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-
-    return Card(
-      color: theme.colorScheme.primary,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(pair.asLowerCase),
-      ),
-    );
   }
 }
