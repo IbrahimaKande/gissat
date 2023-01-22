@@ -33,14 +33,14 @@ class PlatformsView extends StatelessWidget {
             const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
       ),
       // ignore: unnecessary_new
-      content: Container(
+      content: SizedBox(
         // Specify some width
         width: MediaQuery.of(context).size.width * .9,
         // ignore: unnecessary_new
         child: GridView.count(
             crossAxisCount: 3,
             childAspectRatio: 1.0,
-            padding: const EdgeInsets.all(4.0),
+            padding: const EdgeInsets.all(20.0),
             mainAxisSpacing: 4.0,
             crossAxisSpacing: 4.0,
             children: platforms.map((String url) {
@@ -51,17 +51,26 @@ class PlatformsView extends StatelessWidget {
                 onTap: () {
                   launchUrl(Uri.parse(url));
                 },
-                child: Image.asset(
-                  "logos/${logo[url.substring(0, 16)]}",
-                  fit: BoxFit.cover,
-                  width: 12.0,
-                  height: 12.0,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.asset(
+                    "logos/${logo[url.substring(0, 16)]}",
+                    fit: BoxFit.cover,
+                    width: 12.0,
+                    height: 12.0,
+                  ),
                 ),
               ));
             }).toList()),
       ),
       actions: <Widget>[
-        Image.network(tvShow.imageUrl),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(5.0),
+          child: Image.network(
+            tvShow.imageUrl,
+            fit: BoxFit.cover,
+          ),
+        ),
         const SizedBox(
           height: 20,
         ),

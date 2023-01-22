@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:guissat/utilities/tvShow/saveShow.dart';
+import 'package:guissat/utilities/tvShow/viewTvShow.dart';
 import '../../classes/tvShow.dart';
 import '../../utilities/tvShow/findShow.dart';
 import '../pages/platformsView.dart';
@@ -78,39 +80,12 @@ class _TvShowSearchPageState extends State<TvShowSearchPage> {
         const SizedBox(height: 15),
         ElevatedButton.icon(
           onPressed: () {
-            t = fetchTvShows(textController.text, dropdownValue).then((result) {
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return FutureBuilder<TvShow>(
-                        future: t,
-                        builder: (context, snapshot) {
-                          if ((snapshot.hasData) &
-                              (snapshot.data!.title != "null")) {
-                            return AlertDialog(
-                                content: SizedBox(
-                              width: MediaQuery.of(context).size.width * .9,
-                              child: PlatformsView(
-                                tvShow: snapshot.data!,
-                              ),
-                            ));
-                          } else if ((snapshot.hasError) &
-                              (snapshot.data!.title != "null")) {
-                            return AlertDialog(
-                              content:
-                                  Text("An error occurred : ${snapshot.error}"),
-                            );
-                          } else if (snapshot.data!.title == "null") {
-                            return AlertDialog(
-                              content: Text(
-                                  "We couldn't find any result for '${textController.text}' in that country😢"),
-                            );
-                          }
-                          return const Icon(Icons.music_note);
-                        });
-                  });
-              return result;
-            });
+            showDialog(
+                context: context,
+                builder: (context) {
+                  saveShow(textController.text, dropdownValue);
+                  return viewTvShow(textController.text, dropdownValue);
+                });
           },
           icon: const Icon(Icons.search),
           label: const Text('Search'),

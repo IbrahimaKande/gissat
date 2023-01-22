@@ -1,7 +1,15 @@
+import 'dart:js';
+
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:guissat/main.dart';
+import 'package:guissat/screens/pages/platformsView.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import '../../classes/tvShow.dart';
+import '../../utilities/tvShow/findShow.dart';
+import '../../utilities/tvShow/viewTvShow.dart';
 
 class HistoryPage extends StatelessWidget {
   const HistoryPage({super.key});
@@ -9,42 +17,59 @@ class HistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
-    var pair = appState.current;
+    const countries = {
+      "🇫🇷": "fr",
+      "🇬🇧": "uk",
+      "🇺🇸": "us",
+      "🇦🇲": "ar",
+      "🇧🇪": "be",
+      "🇨🇦": "na",
+      "🇩🇰": "de",
+      "🇪🇸": "es",
+      "🇮🇹": "it",
+      "🇮🇱": "is",
+      "🇳🇴": "no",
+      "🇳🇱": "nl",
+      "🇵🇹": "pt",
+    };
 
-    IconData icon;
-    if (appState.favorites.contains(pair)) {
-      icon = Icons.favorite;
-    } else {
-      icon = Icons.favorite_border;
-    }
-
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          BigCard(pair: pair),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  appState.toggleFavorite();
-                },
-                icon: Icon(icon),
-                label: const Text('Like'),
-              ),
-              const SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  appState.getNext();
-                },
-                child: const Text('Next'),
-              ),
-            ],
-          ),
-        ],
-      ),
+    return FutureBuilder<Map<String, String>>(
+      future: loadResearches(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+              shrinkWrap: true,
+              itemCount: snapshot.data!.keys.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Material(
+                    type: MaterialType.card,
+                    child: ListTile(
+                      onTap: () => {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return viewTvShow(
+                                  snapshot.data!.keys.toList()[index],
+                                  snapshot.data!.values.toList()[index]);
+                            })
+                      },
+                      tileColor: Colors.blue.shade50,
+                      focusColor: Colors.blue.shade100,
+                      title: Text(snapshot.data!.keys.toList()[index]),
+                      trailing: Text(countries.keys.firstWhere((element) =>
+                          countries[element] ==
+                          snapshot.data!.values.toList()[index])),
+                    ));
+              });
+        } else {
+          return const Text("An error has occurred}");
+        }
+      },
     );
   }
+}
+
+Future<Map<String, String>> loadResearches() async {
+  FlutterSecureStorage storage = const FlutterSecureStorage();
+  return await storage.readAll();
 }
