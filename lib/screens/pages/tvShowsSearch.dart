@@ -1,7 +1,7 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:guissat/screens/pages/viewAllSuggestions.dart';
-import 'package:guissat/utilities/tvShow/saveShow.dart';
-import 'package:guissat/utilities/tvShow/viewTvShow.dart';
 import '../../classes/tvShow.dart';
 
 const countries = {

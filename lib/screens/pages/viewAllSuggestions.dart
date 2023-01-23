@@ -1,10 +1,11 @@
+// ignore: duplicate_ignore
 // ignore: file_names
-import 'dart:convert';
+
+// ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
 import 'package:guissat/screens/pages/suggestionView.dart';
 import 'package:guissat/utilities/tvShow/findShow.dart';
-import 'package:guissat/utilities/tvShow/viewTvShow.dart';
 
 class ViewAllSuggestions extends StatelessWidget {
   final String title;

@@ -1,6 +1,9 @@
+// ignore: duplicate_ignore
 // ignore: file_names
+
+// ignore_for_file: file_names
+
 import 'dart:convert';
-import 'dart:js';
 import 'package:http/http.dart' as http;
 import '../../classes/tvShow.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';

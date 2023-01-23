@@ -20,6 +20,7 @@ class PlatformsView extends StatelessWidget {
       "https://www.amaz": "apv.webp",
       "https://watch.am": "apv.webp",
       "https://app.prim": "apv.webp",
+      "https://itunes.a": "itunes.jpeg"
     };
 
     return AlertDialog(
