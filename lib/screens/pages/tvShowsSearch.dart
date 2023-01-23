@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guissat/screens/pages/viewAllSuggestions.dart';
 import 'package:guissat/utilities/tvShow/saveShow.dart';
 import 'package:guissat/utilities/tvShow/viewTvShow.dart';
 import '../../classes/tvShow.dart';
@@ -81,8 +82,8 @@ class _TvShowSearchPageState extends State<TvShowSearchPage> {
             showDialog(
                 context: context,
                 builder: (context) {
-                  saveShow(textController.text, dropdownValue);
-                  return viewTvShow(textController.text, dropdownValue);
+                  return ViewAllSuggestions(
+                      country: dropdownValue, title: textController.text);
                 });
           },
           icon: const Icon(Icons.search),
