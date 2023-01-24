@@ -1,7 +1,8 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:guissat/screens/pages/history.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart' hide ChangeNotifierProvider;
+import 'package:provider/provider.dart' ;
 import 'screens/pages/tvShowsSearch.dart';
 import 'screens/pages/generator_sample.dart';
 import 'screens/pages/musicSerach.dart';
@@ -10,7 +11,8 @@ import 'package:flutter/services.dart' show rootBundle;
 
 void main() async {
   await dotenv.load(fileName: ".env");
-  runApp(const MyApp());
+  
+  runApp(ProviderScope(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

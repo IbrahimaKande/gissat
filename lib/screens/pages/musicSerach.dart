@@ -1,24 +1,27 @@
-import 'package:english_words/english_words.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:guissat/main.dart';
+import 'package:guissat/screens/pages/music.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
 import 'package:flutter_sound/flutter_sound.dart';
-import 'package:permission_handler/permission_handler.dart';
 
-class MusicSearchPage extends StatelessWidget {
+
+
+class MusicSearchPage extends HookConsumerWidget {
+  
   MusicSearchPage({super.key});
+  
 
-  final recorder = FlutterSoundRecorder();
+  /*final recorder = FlutterSoundRecorder();
   bool isRecorderReady = false;
 
   Future initRecorder() async {
     //final status = await Permission.microphone.request();
-
     /*if (status != PermissionStatus.granted) {
       throw 'Permission not granted';
     }*/
-
     await recorder.openRecorder();
     isRecorderReady = true;
   }
@@ -27,7 +30,6 @@ class MusicSearchPage extends StatelessWidget {
     if (!isRecorderReady) return;
     final path = await recorder.stopRecorder();
     final audioFile = File(path!);
-
     print('Record : $audioFile');
   }
 
@@ -35,45 +37,104 @@ class MusicSearchPage extends StatelessWidget {
     if (!isRecorderReady) return;
     await recorder.startRecorder(toFile: 'audio');
   }
-
+*/
   @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-
+  Widget build(BuildContext context, WidgetRef ref) {
+    var appState = context.watch<MyAppState>(); 
+    final vm = ref.watch(musicViewModel);
+    
+    if(vm.success){
+      return Scaffold(
+      backgroundColor: Color(0xFF042442),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height * 0.6,
+              width: MediaQuery.of(context).size.width,
+            ),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.all(20),
+                width: MediaQuery.of(context).size.width,
+                color: Colors.black,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 100,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Text(vm.currentSong?.title ?? '',
+                                // overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.w500)),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(vm.currentSong?.artist?.name ?? '',
+                        style: TextStyle(color: Colors.white, fontSize: 15))
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+    }
+    else{
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  appState.toggleFavorite();
-                },
-                icon: Icon(Icons.music_note),
-                label: const Text('SearchMusic'),
-              ),
-              const SizedBox(width: 25),
-              ElevatedButton.icon(
-                onPressed: () {
-                  appState.toggleFavorite();
-                },
-                icon: Icon(Icons.live_tv),
-                label: const Text('SearchShow'),
-              ),
-              const SizedBox(width: 25),
-              ElevatedButton.icon(
-                onPressed: () {
-                  initRecorder();
-                },
-                icon: Icon(Icons.mic),
-                label: const Text(''),
-              ),
-            ],
+          Text(
+            'Tap to search your music',
+            style: TextStyle(color: Colors.white, fontSize: 20),
           ),
+          SizedBox(
+            height: 40,
+            ),
+          AvatarGlow (
+            endRadius: 200.0,
+            animate: vm.isRecognizing,
+             child: GestureDetector (
+               onTap: () =>  vm.isRecognizing ? vm.stopRecognizing() : vm.startRecognizing(),
+               child: Material(
+                shape: CircleBorder(),
+                elevation: 8,
+                child: Container(
+                  padding: EdgeInsets.all(40),
+                  height: 200,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.blue),
+                  child: Image.asset(
+                   'logos/logo-2.png',
+                   color: Colors.white,
+                  ),  
+                  ),
+                ),
+             ),
+           )
+            ,
         ],
       ),
     );
+    }
   }
 }

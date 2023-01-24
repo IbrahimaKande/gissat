@@ -39,11 +39,15 @@ dependencies:
   provider: ^6.0.5
   english_words: ^4.0.0
   flutter_sound: ^9.2.13
-  permission_handler: ^10.2.0
   http: ^0.13.5
   flutter_dotenv: ^5.0.2
   shared_preferences: ^2.0.16
   flutter_secure_storage: ^7.0.1
+  acr_cloud_sdk: ^2.0.1
+  avatar_glow: ^2.0.2
+  hooks_riverpod: ^2.1.3
+  dio: ^4.0.6
+  flutter_hooks: ^0.18.5+1
 
 dev_dependencies:
   flutter_test:
