@@ -12,12 +12,12 @@ class MusicSearchPage extends StatelessWidget {
   final recorder = FlutterSoundRecorder();
   bool isRecorderReady = false;
 
-  Future initRecorder() async {
+  /*Future initRecorder() async {
     //final status = await Permission.microphone.request();
 
-    /*if (status != PermissionStatus.granted) {
+    if (status != PermissionStatus.granted) {
       throw 'Permission not granted';
-    }*/
+    }
 
     await recorder.openRecorder();
     isRecorderReady = true;
@@ -34,7 +34,7 @@ class MusicSearchPage extends StatelessWidget {
   Future record() async {
     if (!isRecorderReady) return;
     await recorder.startRecorder(toFile: 'audio');
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -53,22 +53,6 @@ class MusicSearchPage extends StatelessWidget {
                 },
                 icon: Icon(Icons.music_note),
                 label: const Text('SearchMusic'),
-              ),
-              const SizedBox(width: 25),
-              ElevatedButton.icon(
-                onPressed: () {
-                  appState.toggleFavorite();
-                },
-                icon: Icon(Icons.live_tv),
-                label: const Text('SearchShow'),
-              ),
-              const SizedBox(width: 25),
-              ElevatedButton.icon(
-                onPressed: () {
-                  initRecorder();
-                },
-                icon: Icon(Icons.mic),
-                label: const Text(''),
               ),
             ],
           ),

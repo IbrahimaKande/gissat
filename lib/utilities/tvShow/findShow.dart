@@ -9,8 +9,8 @@ import '../../classes/tvShow.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 var headers = {
-  'X-RapidAPI-Key': dotenv.env['X-RapidAPI-Key'] ?? '',
-  'X-RapidAPI-Host': dotenv.env['X-RapidAPI-Host'] ?? ''
+  'X-RapidAPI-Key': '5bcabe5e09msh367059a6bf77a1ep1a3af6jsnd00f2c4c2aa1',
+  'X-RapidAPI-Host': 'utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com'
 };
 
 Future<TvShow> fetchTvShows(title, country) async {
