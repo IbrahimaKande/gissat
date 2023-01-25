@@ -4,7 +4,7 @@ import '../../classes/deezer_song_model.dart';
 
 class SongScreen extends StatelessWidget {
   final DeezerSongModel song;
-  const SongScreen({required Key key,  required this.song}) : super(key: key);
+  const SongScreen({required Key key, required this.song}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,12 +21,12 @@ class SongScreen extends StatelessWidget {
             Container(
               height: MediaQuery.of(context).size.height * 0.6,
               width: MediaQuery.of(context).size.width,
-             // decoration: BoxDecoration(
-                  //image: DecorationImage(
-                      
-                        //  Image.network(song?.album?.coverMedium),*/
-                         
-                     // fit: BoxFit.cover)),
+              // decoration: BoxDecoration(
+              //image: DecorationImage(
+
+              //  Image.network(song?.album?.coverMedium),*/
+
+              // fit: BoxFit.cover)),
               // child: Image.asset('assets/images/todd.jpg'),
             ),
             Expanded(
@@ -55,7 +55,7 @@ class SongScreen extends StatelessWidget {
                     SizedBox(
                       height: 5,
                     ),
-                    Text(song?.artist?.name ?? '',
+                    Text(song.artist?.name ?? '',
                         style: TextStyle(color: Colors.white, fontSize: 15))
                   ],
                 ),
