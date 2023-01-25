@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:acr_cloud_sdk/acr_cloud_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:guissat/classes/deezer_song_model.dart';
@@ -13,6 +15,7 @@ class MusicViewModel extends ChangeNotifier {
   DeezerSongModel? currentSong;
   bool isRecognizing = false;
   bool success = false;
+  late Map<String, String> finalSong;
 
   Future<void> initAcr() async {
     try {
@@ -30,10 +33,23 @@ class MusicViewModel extends ChangeNotifier {
   }
 
   void searchSong(SongModel song) async {
+    print(song.metadata!.music![0].title);
     final metadata = song.metadata;
     if (metadata != null && metadata.music!.isNotEmpty) {
-      final trackId = metadata.music![0].externalMetadata?.deezer?.track?.id;
-      try {
+      finalSong = {
+        "title": metadata.music![0].title!,
+        "artist": metadata.music![0].artists![0].name!,
+        "album": metadata.music![0].album!.name!,
+      };
+      success = true;
+      notifyListeners();
+      /*final trackId = metadata.music![0].externalMetadata?.deezer?.track?.id;
+      await songService.getTrack(trackId).then((value) => {
+            success = true,
+            notifyListeners(),
+            finalSong = value!.data,
+          });*/
+      /*try {
         final res = await songService.getTrack(trackId);
         currentSong = res;
         success = true;
@@ -44,7 +60,7 @@ class MusicViewModel extends ChangeNotifier {
         success = false;
         notifyListeners();
         print("catch here");
-      }
+      }*/
     }
   }
 
